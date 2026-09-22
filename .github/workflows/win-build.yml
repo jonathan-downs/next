@@ -1,0 +1,16 @@
+name: Windows build (fork only)
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup update stable
+      - run: cargo build --release --all-features --target x86_64-pc-windows-msvc -p ersatztv-channel -p ersatztv-playout-generator
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ersatztv-channel-windows-x64
+          path: |
+            target/x86_64-pc-windows-msvc/release/ersatztv-channel.exe
+            target/x86_64-pc-windows-msvc/release/ersatztv-playout-generator.exe
